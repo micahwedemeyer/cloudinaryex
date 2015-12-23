@@ -38,7 +38,16 @@ defmodule CloudinaryexTest do
     ~w(signature timestamp api_key)
       |> Enum.each(fn(key) ->
         assert (opts |> Enum.find(&(elem(&1, 0) == key)))
+      end)
+  end
 
+  test "build delete options", %{config: config} do
+    opts = Cloudinaryex.build_delete_opts(config, "sample")
+
+    assert (opts |> Enum.find(&(elem(&1, 0) == "public_id")) |> elem(1)) == "sample"
+    ~w(signature timestamp api_key)
+      |> Enum.each(fn(key) ->
+        assert (opts |> Enum.find(&(elem(&1, 0) == key)))
       end)
   end
 end
