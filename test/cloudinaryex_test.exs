@@ -13,9 +13,7 @@ defmodule CloudinaryexTest do
   """
   test "signature string creation", %{config: config} do
     options = %{"timestamp" => "1315060510", "public_id" => "sample"}
-    {sig_str, _} = Cloudinaryex.signature(config, options)
-
-    assert "public_id=sample&timestamp=1315060510abcd" == sig_str
+    assert "public_id=sample&timestamp=1315060510abcd" == Cloudinaryex.signature_string(config, options)
   end
 
   @doc """
@@ -23,6 +21,6 @@ defmodule CloudinaryexTest do
   """
   test "basic signature", %{config: config} do
     options = %{"timestamp" => "1315060510", "public_id" => "sample"}
-    assert "c3470533147774275dd37996cc4d0e68fd03cd4f" == Cloudinaryex.signature(config, options) |> elem(1)
+    assert "c3470533147774275dd37996cc4d0e68fd03cd4f" == Cloudinaryex.signature(config, options)
   end
 end

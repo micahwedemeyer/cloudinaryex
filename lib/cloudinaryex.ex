@@ -11,10 +11,18 @@ defmodule Cloudinaryex do
   end
 
 
+
   @doc """
-  Creates the signature for the Cloudinary request.
+  Creates the hashed signature value for the Cloudinary request.
   """
   def signature(config, options) do
+    :crypto.hash(:sha, signature_string(config, options)) |> Base.encode16 |> String.downcase
+  end
+
+  @doc """
+  Creates the un-hashed signature string used for signing the Cloudinary request.
+  """
+  def signature_string(config, options) do
     options = Map.put_new(options, "timestamp", string_timestamp())
     sig_string = options
       |> Map.to_list
@@ -29,9 +37,9 @@ defmodule Cloudinaryex do
       end)
       |> Enum.join("&")
 
-    sig_string = "#{sig_string}#{config.api_secret}"
-    {sig_string, :crypto.hash(:sha, sig_string) |> Base.encode16 |> String.downcase}
+    "#{sig_string}#{config.api_secret}"
   end
+
 
   defp string_timestamp do
     Time.now
