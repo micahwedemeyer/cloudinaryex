@@ -1,6 +1,10 @@
 # Cloudinaryex
 
-**TODO: Add description**
+## Warning
+This is my first Hex module and nearly my first experiment with Elixir. I'm cargo culting other Hex modules as much as possible, but don't expect perfection here.
+
+## Overview
+A wrapper around the Cloudinary HTTP API for uploading and interacting with images.
 
 ## Installation
 
