@@ -7,7 +7,12 @@ defmodule Cloudinaryex.Mixfile do
      elixir: "~> 1.1",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     deps: deps]
+     deps: deps,
+     package: package,
+     name: "Cloudinaryex",
+     description: "A library for connecting with Cloudinary in Elixir",
+     source_url: "https://github.com/micahwedemeyer/cloudinaryex"
+   ]
   end
 
   # Configuration for the OTP application
@@ -32,5 +37,11 @@ defmodule Cloudinaryex.Mixfile do
       {:poison, "~> 1.5.0"},
       {:timex, "~> 1.0.0-rc4"}
     ]
+  end
+
+  defp package do
+    [ maintainers: ["Micah Wedemeyer"],
+      licenses: ["MIT"],
+      links: %{"Github" => "https://github.com/micahwedemeyer/cloudinaryex"} ]
   end
 end
