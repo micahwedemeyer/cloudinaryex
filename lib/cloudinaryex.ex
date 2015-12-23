@@ -1,16 +1,25 @@
 defmodule Cloudinaryex do
-
   use Timex
 
   def upload(config, file, options \\ %{}) do
+    # TODO: If file is a binary (ie. not a path) save to a tmp file and then stream
+    post_opts = build_upload_opts(config, file, options)
     api_url = "https://api.cloudinary.com/v1_1/#{config.cloud_name}/image/upload"
-    {_, sig} = signature(config, options)
+    HTTPoison.post!(api_url, {:multipart, post_opts})
   end
 
-  defp build_upload_params do
+  @doc """
+  Creates the HTTPoison options needed for the post
+  """
+  def build_upload_opts(config, file, options) do
+    timestamp = string_timestamp()
+    options = Map.put_new(options, "timestamp", timestamp)
+    sig = signature(config, options)
+
+    options
+      |> Map.merge(%{"api_key" => config.api_key, "signature" => sig, :file => file})
+      |> Map.to_list
   end
-
-
 
   @doc """
   Creates the hashed signature value for the Cloudinary request.
