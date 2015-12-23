@@ -32,18 +32,14 @@ defmodule Cloudinaryex do
   Creates the un-hashed signature string used for signing the Cloudinary request.
   """
   def signature_string(config, options) do
-    options = Map.put_new(options, "timestamp", string_timestamp())
     sig_string = options
+      |> Map.put_new("timestamp", string_timestamp())
       |> Map.to_list
       |> Enum.map(fn(t) ->
         put_elem(t, 0, String.downcase(elem(t, 0)))
       end)
-      |> Enum.sort(fn(a,b) ->
-        elem(a, 0) <= elem(b, 0)
-      end)
-      |> Enum.map(fn(t) ->
-        "#{elem(t,0)}=#{elem(t,1)}"
-      end)
+      |> Enum.sort(&(elem(&1, 0) <= elem(&2, 0)))
+      |> Enum.map(&("#{elem(&1, 0)}=#{elem(&1, 1)}"))
       |> Enum.join("&")
 
     "#{sig_string}#{config.api_secret}"
