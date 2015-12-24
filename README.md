@@ -34,12 +34,11 @@ To set the configuration (using Mix.Config):
 
 To upload an image:
 
-    config = %Cloudinaryex.Config{cloud_name: "my-cloud", api_key: "1234", api_secret: "abcd"}
-    Cloudinaryex.upload(config, "/path/to/image.jpg", %{ "folder" => folder })
+    Cloudinaryex.upload("/path/to/image.jpg", %{ "folder" => folder })
 
 To delete an image:
 
-    Cloudinaryex.delete(config, "image-public-id")
+    Cloudinaryex.delete("image-public-id")
 
 ## TODO
 
