@@ -5,7 +5,7 @@ defmodule CloudinaryexSignatureTest do
   alias Cloudinaryex.Config
 
   setup do
-    {:ok, [config: %Config{cloud_name: "my-cloud", api_key: "1234", api_secret: "abcd"}] }
+    {:ok, [config: Config.default()] }
   end
 
   @doc """

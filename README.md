@@ -22,6 +22,14 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
           [applications: [:cloudinaryex]]
         end
 
+## Configuration
+To set the configuration (using Mix.Config):
+
+    config :cloudinaryex,
+      cloud_name: "my-cloud",
+      api_key: "1234",
+      api_secret: "abcd"
+
 ## Usage
 
 To upload an image:

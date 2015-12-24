@@ -2,7 +2,14 @@ defmodule Cloudinaryex do
   @doc """
   Uploads an image to Cloudinary. Expects the file to be a path to an image file on disk.
   """
-  def upload(config, file, options \\ %{}) do
+  def upload(file, options \\ %{}) do
+    default_config() |> upload(file, options)
+  end
+
+  @doc """
+  Uploads an image to Cloudinary. Expects the file to be a path to an image file on disk.
+  """
+  def upload(config, file, options) do
     # TODO: If file is a binary (ie. not a path) save to a tmp file and then stream
     post_opts = build_upload_opts(config, file, options)
     api_url = "https://api.cloudinary.com/v1_1/#{config.cloud_name}/image/upload"
@@ -20,6 +27,12 @@ defmodule Cloudinaryex do
       |> Map.to_list
   end
 
+  @doc """
+  Deletes an image from Cloudinary.
+  """
+  def delete(public_id) do
+    default_config() |> delete(public_id)
+  end
 
   @doc """
   Deletes an image from Cloudinary.
@@ -47,5 +60,9 @@ defmodule Cloudinaryex do
 
   defp timestamp(options) do
     Map.put_new(options, "timestamp", Cloudinaryex.Timestamp.string_timestamp())
+  end
+
+  defp default_config do
+    Cloudinaryex.Config.default()
   end
 end
